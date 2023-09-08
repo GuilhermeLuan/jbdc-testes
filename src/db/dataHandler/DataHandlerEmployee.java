@@ -15,6 +15,7 @@ public class DataHandlerEmployee implements DataHandler {
 
 
         try {
+            DB.getConnection();
             System.out.println("Informações dos funcionarios: \n");
 
             while (resultSet.next()){
@@ -40,7 +41,6 @@ public class DataHandlerEmployee implements DataHandler {
             throw new DbException(e.getMessage());
         } finally {
             closeResultSet(resultSet);
-            closeConnection();
         }
     }
 }

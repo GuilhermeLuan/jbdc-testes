@@ -15,6 +15,7 @@ public class DataHandlerDepartment implements DataHandler {
 
 
         try {
+            DB.getConnection();
             System.out.println("Informações do Departamento: \n");
             while (resultSet.next()){
                 int departmentId = resultSet.getInt("Id");
@@ -29,7 +30,6 @@ public class DataHandlerDepartment implements DataHandler {
         }
         finally {
             DB.closeResultSet(resultSet);
-            DB.closeConnection();
         }
 
     }
