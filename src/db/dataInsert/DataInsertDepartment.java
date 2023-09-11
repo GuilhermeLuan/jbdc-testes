@@ -9,21 +9,12 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class DataInsertDepartment {
-    private PreparedStatement preparedStatement = null;
+public class DataInsertDepartment extends DataInsert{
+    private static PreparedStatement preparedStatement = null;
 
-    public void insertData(Connection connection, String departmentName ) {
-        try {
-
+    public static void insertData(Connection connection, String departmentName ) {
             String sql = "INSERT INTO department (Name) VALUES (?)";
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, departmentName);
-            preparedStatement.executeUpdate();
+            DataInsert.insertData(connection, sql, departmentName);
 
-        } catch (SQLException e) {
-            throw new DbException(e.getMessage());
-        } finally {
-            DB.closePreparedStatement(preparedStatement);
-        }
     }
 }

@@ -60,8 +60,7 @@ public class Program {
 
                 Connection connection = DB.getConnection();
 
-                DataInsertEmployee dataInsertEmployee = new DataInsertEmployee();
-                dataInsertEmployee.insertData(connection, employeeName, employeeEmail, birtDate, salary, departmentId);
+                DataInsertEmployee.insertData(connection, employeeName, employeeEmail, birtDate, salary, departmentId);
             } else if (Objects.equals(dbTable, 4)) {
                 Connection connection = DB.getConnection();
 
@@ -70,8 +69,7 @@ public class Program {
                 System.out.print("Nome do departamento: ");
                 String departmentName = sc.next();
 
-                DataInsertDepartment dataInsertDepartment = new DataInsertDepartment();
-                dataInsertDepartment.insertData(connection, departmentName);
+                DataInsertDepartment.insertData(connection, departmentName);
             }
 
         }
