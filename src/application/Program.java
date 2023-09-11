@@ -5,6 +5,9 @@ import db.DataHandlerDepartment;
 import db.DbException;
 import db.dataHandler.DataHandler;
 import db.dataHandler.DataHandlerEmployee;
+import db.dataInsert.DataInsert;
+import db.dataInsert.DataInsertDepartment;
+import db.dataInsert.DataInsertEmployee;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,12 +21,11 @@ import java.util.Scanner;
 
 public class Program {
     public static void main(String[] args) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Scanner sc = new Scanner(System.in);
         int dbTable = 0;
 
         while (dbTable != 5) {
-            System.out.println("----------- Bancos de dados -----------\n" +
+            System.out.print("----------- Bancos de dados -----------\n" +
                     "Operação:\n" +
                     "[1] Consultar Funcionarios \n" +
                     "[2] Consultar Departamentos\n" +
@@ -43,7 +45,7 @@ public class Program {
                 dataHandlerDepartment.getData("department");
             } else if (Objects.equals(dbTable, 3)) {
 
-                System.out.println("Insira os dados dos Funcionario:");
+                System.out.println("Insira os dados do novo Funcionario:");
                 System.out.print("Nome: ");
                 String employeeName = sc.next();
                 //sc.nextLine();
@@ -57,23 +59,19 @@ public class Program {
                 int departmentId = sc.nextInt();
 
                 Connection connection = DB.getConnection();
-                PreparedStatement preparedStatement = null;
-                try {
 
-                    String sql = "INSERT INTO seller (Name, Email, BirthDate, BaseSalary, DepartmentId) VALUES ( ?, ?, ?, ?, ?)";
-                    preparedStatement = connection.prepareStatement(sql);
-                    preparedStatement.setString(1, employeeName);
-                    preparedStatement.setString(2, employeeEmail);
-                    preparedStatement.setDate(3, new java.sql.Date((simpleDateFormat.parse(birtDate).getTime())));
-                    preparedStatement.setDouble(4, salary);
-                    preparedStatement.setInt(5, departmentId);
-                    preparedStatement.executeUpdate();
+                DataInsertEmployee dataInsertEmployee = new DataInsertEmployee();
+                dataInsertEmployee.insertData(connection, employeeName, employeeEmail, birtDate, salary, departmentId);
+            } else if (Objects.equals(dbTable, 4)) {
+                Connection connection = DB.getConnection();
 
-                } catch (SQLException e) {
-                    throw new DbException(e.getMessage());
-                } finally {
-                    DB.closePreparedStatement(preparedStatement);
-                }
+                System.out.println("Insira os dados do novo Departamento: ");
+
+                System.out.print("Nome do departamento: ");
+                String departmentName = sc.next();
+
+                DataInsertDepartment dataInsertDepartment = new DataInsertDepartment();
+                dataInsertDepartment.insertData(connection, departmentName);
             }
 
         }
