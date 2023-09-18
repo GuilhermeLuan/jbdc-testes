@@ -3,6 +3,7 @@ package application;
 import db.DB;
 import db.DataHandlerDepartment;
 import db.DbException;
+import db.dataChange.EmployeeIncreaseSalary;
 import db.dataHandler.DataHandler;
 import db.dataHandler.DataHandlerEmployee;
 import db.dataInsert.DataInsert;
@@ -24,14 +25,15 @@ public class Program {
         Scanner sc = new Scanner(System.in);
         int dbTable = 0;
 
-        while (dbTable != 5) {
+        while (dbTable != 6) {
             System.out.print("----------- Bancos de dados -----------\n" +
                     "Operação:\n" +
                     "[1] Consultar Funcionarios \n" +
                     "[2] Consultar Departamentos\n" +
                     "[3] Adicionar novo Funcionario\n" +
                     "[4] Adicionar novo Novo Departamento\n" +
-                    "[5] Sair\n" +
+                    "[5] Aumentar salário\n"+
+                    "[6] Sair\n" +
                     "Opção: ");
 
             dbTable = sc.nextInt();
@@ -70,6 +72,13 @@ public class Program {
                 String departmentName = sc.next();
 
                 DataInsertDepartment.insertData(connection, departmentName);
+            } else if (Objects.equals(dbTable, 5)) {
+                System.out.println("AUMENTO SALARIAL");
+                System.out.print("ID do funcionario: ");
+                int employeeId = sc.nextInt();
+                System.out.print("Porcentagem do aumento: ");
+                double salaryIncreasePercentage = sc.nextDouble();
+                EmployeeIncreaseSalary.increaseSalary(salaryIncreasePercentage, employeeId);
             }
 
         }
