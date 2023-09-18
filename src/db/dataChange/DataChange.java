@@ -23,6 +23,8 @@ public class DataChange {
 
         } catch (SQLException e){
             throw new DbException(e.getMessage());
+        } finally {
+            DB.closePreparedStatement(preparedStatement);
         }
 
     }
