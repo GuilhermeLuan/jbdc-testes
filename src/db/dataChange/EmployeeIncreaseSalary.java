@@ -2,32 +2,25 @@ package db.dataChange;
 
 import db.DB;
 import db.DbException;
+import db.dataInsert.DataInsert;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class EmployeeIncreaseSalary {
-    public static void increaseSalary(double salaryIncreasePercentage, int employeeID){
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
+//"UPDATE seller " +
+//        "SET BaseSalary = BaseSalary * ((? /100) + 1) " +
+//        "WHERE " +
+//        "(Id = ?)"
+public class EmployeeIncreaseSalary extends DataChange {
 
-        try {
-            connection = DB.getConnection();
+    public static void increaseSalary(Connection connection, Double increasePercentage, Integer employeeId ){
+        String sql = "UPDATE seller " +
+        "SET BaseSalary = BaseSalary * ((? /100) + 1) " +
+       "WHERE " +
+        "(Id = ?)";
 
-            preparedStatement = connection.prepareStatement("UPDATE seller " +
-                    "SET BaseSalary = BaseSalary * ((? /100) + 1) " +
-                    "WHERE " +
-                    "(Id = ?)");
+        DataChange.dataChange(connection, sql, increasePercentage, employeeId);
+    }
 
-            preparedStatement.setDouble(1, salaryIncreasePercentage);
-            preparedStatement.setInt(2, employeeID);
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DbException(e.getMessage());
-        } finally {
-            DB.closePreparedStatement(preparedStatement);
-        }
-    };
 }

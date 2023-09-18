@@ -22,6 +22,7 @@ import java.util.Scanner;
 
 public class Program {
     public static void main(String[] args) throws ParseException {
+        Connection connection = DB.getConnection();
         Scanner sc = new Scanner(System.in);
         int dbTable = 0;
 
@@ -60,11 +61,9 @@ public class Program {
                 System.out.print("Department Id: ");
                 int departmentId = sc.nextInt();
 
-                Connection connection = DB.getConnection();
 
                 DataInsertEmployee.insertData(connection, employeeName, employeeEmail, birtDate, salary, departmentId);
             } else if (Objects.equals(dbTable, 4)) {
-                Connection connection = DB.getConnection();
 
                 System.out.println("Insira os dados do novo Departamento: ");
 
@@ -73,12 +72,14 @@ public class Program {
 
                 DataInsertDepartment.insertData(connection, departmentName);
             } else if (Objects.equals(dbTable, 5)) {
+
+
                 System.out.println("AUMENTO SALARIAL");
                 System.out.print("ID do funcionario: ");
                 int employeeId = sc.nextInt();
                 System.out.print("Porcentagem do aumento: ");
                 double salaryIncreasePercentage = sc.nextDouble();
-                EmployeeIncreaseSalary.increaseSalary(salaryIncreasePercentage, employeeId);
+                EmployeeIncreaseSalary.increaseSalary(connection, salaryIncreasePercentage, employeeId);
             }
 
         }
