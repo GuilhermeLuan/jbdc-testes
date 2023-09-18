@@ -4,6 +4,8 @@ import db.DB;
 import db.DataHandlerDepartment;
 import db.DbException;
 import db.dataChange.EmployeeIncreaseSalary;
+import db.dataDelete.DataDeleteDepartment;
+import db.dataDelete.DataDeleteEmployee;
 import db.dataHandler.DataHandler;
 import db.dataHandler.DataHandlerEmployee;
 import db.dataInsert.DataInsert;
@@ -26,15 +28,17 @@ public class Program {
         Scanner sc = new Scanner(System.in);
         int dbTable = 0;
 
-        while (dbTable != 6) {
+        while (dbTable != 8) {
             System.out.print("----------- Bancos de dados -----------\n" +
                     "Operação:\n" +
                     "[1] Consultar Funcionarios \n" +
                     "[2] Consultar Departamentos\n" +
                     "[3] Adicionar novo Funcionario\n" +
                     "[4] Adicionar novo Novo Departamento\n" +
-                    "[5] Aumentar salário\n"+
-                    "[6] Sair\n" +
+                    "[5] Aumentar salário\n" +
+                    "[6] Deletar Funcionario\n"+
+                    "[7] Deletar Departamentos\n"+
+                    "[8] Sair\n" +
                     "Opção: ");
 
             dbTable = sc.nextInt();
@@ -80,7 +84,18 @@ public class Program {
                 System.out.print("Porcentagem do aumento: ");
                 double salaryIncreasePercentage = sc.nextDouble();
                 EmployeeIncreaseSalary.increaseSalary(connection, salaryIncreasePercentage, employeeId);
+            } else if (Objects.equals(dbTable, 6)) {
+                System.out.println("DELETAR FUNCIONARIO");
+                System.out.println("ID do funcionario: ");
+                int employeeId = sc.nextInt();
+                DataDeleteEmployee.deleteEmployee(connection, employeeId);
+            } else if (Objects.equals(dbTable, 7)) {
+                System.out.println("DELETAR FUNCIONARIO");
+                System.out.println("ID do departamento: ");
+                int departmentId = sc.nextInt();
+                DataDeleteDepartment.deleteDepartment(connection, departmentId);
             }
+
 
         }
         DB.getConnection();

@@ -17,7 +17,7 @@ public class EmployeeIncreaseSalary extends DataChange {
     public static void increaseSalary(Connection connection, Double increasePercentage, Integer employeeId ){
         String sql = "UPDATE seller " +
         "SET BaseSalary = BaseSalary * ((? /100) + 1) " +
-       "WHERE " +
+        "WHERE " +
         "(Id = ?)";
 
         DataChange.dataChange(connection, sql, increasePercentage, employeeId);
